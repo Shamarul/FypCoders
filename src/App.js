@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
+        <p className="red-default">
           This is our freshly new created app !! Ikuzo minna
         </p>
         <a

@@ -1,0 +1,30 @@
+.Footer {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    background-color: palevioletred;
+    justify-content: space-between
+}
+
+.about {
+    display: flex;
+    flex-direction: column;
+    flex: 0.3
+}
+
+.followBy {
+    display: flex;
+    flex-direction: column;
+    flex: 0.5
+}
+
+.social {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.remove-padding {
+    padding: 0;
+    margin: 0;
+}

@@ -1,0 +1,14 @@
+.App, html, body {
+  height: 100%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex: 1 ;
+  flex-direction:row;
+}

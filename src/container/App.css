@@ -1,8 +1,9 @@
-.App, html, body {
+
+.wrapper, html, body {
   height: 100%;
 }
 
-.App {
+.wrapper {
   display: flex;
   flex-direction: column;
 }

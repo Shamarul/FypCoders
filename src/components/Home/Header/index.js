@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import './index.css';
 
+import { connect } from 'react-redux';
+import { signOut } from '../../../actions/AuthActions';
+// import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+
+const iconStyle = {
+    color: 'white'
+}
+
 class Header extends Component {
   render() {
     return (
@@ -29,10 +38,30 @@ class Header extends Component {
             <div>
                 <p>Shop</p>
             </div>
+            <div onClick={this.props.signOut} >
+                {/* <Icon color='disabled' style={iconStyle}>
+                                power_settings_new
+                </Icon> */}
+                <p>Log Out</p>
+                {/* <Button onClick={this.props.signOut} variant="contained" color="primary">
+                    Hello World
+                </Button> */}
+            </div>
         </div>
       </div>
     );
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signOut: () => dispatch(signOut()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

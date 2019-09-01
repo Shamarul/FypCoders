@@ -11,7 +11,7 @@ class Home extends Component {
   render() {
 
     const { auth } = this.props;
-        if (!auth.uid) return <Redirect to='/' />
+        // if (!auth.uid) return <Redirect to='/' />
 
     return (
       <div className="Home">
@@ -23,6 +23,21 @@ class Home extends Component {
             <div className="aboutProduct">
                 <p>- ABOUT PRODUCT FROM THE ALOEALFA.COM -</p>
             </div>
+            <div className="productContainer">
+                <div className="product">
+
+                </div>
+                <div className="product">
+
+                </div>
+                <div className="product">
+
+                </div>
+                <div className="product">
+
+                </div>
+            </div>
+
             <div className="productContainer">
                 <div className="product">
 

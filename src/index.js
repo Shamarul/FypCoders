@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { reduxFirestore, getFirestore } from 'redux-firestore';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import firebase from './Firebase.js';
+import './assets/fonts/Friday.otf'
 
 const store = createStore(reducers,
     compose (

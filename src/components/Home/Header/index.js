@@ -5,13 +5,24 @@ import { connect } from 'react-redux';
 import { signOut } from '../../../actions/AuthActions';
 // import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
 
 const iconStyle = {
     color: 'white'
 }
 
 class Header extends Component {
-  render() {
+    state = {
+        login: false,
+        signup: false,
+    }
+
+    render() {
+
+    const { login, signup } = this.state;
+        if (login) return <Redirect to='/login' />
+        if (signup) return <Redirect to='/signup' />
+        
     return (
       <div className="Header">
         <div className="shop">
@@ -38,14 +49,11 @@ class Header extends Component {
             <div>
                 <p>Shop</p>
             </div>
-            <div onClick={this.props.signOut} >
-                {/* <Icon color='disabled' style={iconStyle}>
-                                power_settings_new
-                </Icon> */}
-                <p>Log Out</p>
-                {/* <Button onClick={this.props.signOut} variant="contained" color="primary">
-                    Hello World
-                </Button> */}
+            <div>
+                <p onClick={()=>{this.setState({login:!login})}}>Login</p>
+            </div>
+            <div>
+                <p onClick={()=>{this.setState({signup:!signup})}}>Sign Up</p>
             </div>
         </div>
       </div>

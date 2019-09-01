@@ -28,10 +28,13 @@ class Login extends Component {
 
     // if(this.state.loginStatus) return <Redirect to='/home' />
     const { authError , auth } = this.props;
-        if (auth.uid) return <Redirect to='/home' />
+        // if (auth.uid) return <Redirect to='/' />
 
     return (
       <div className="Login">
+            <div>
+                <p>Log In</p>
+            </div>
             <form onSubmit={this.handleSubmit} className=''>
                     <h5 className='' > Sign In </h5>
                     <input type='email' id='email' onChange={this.handleChange} />

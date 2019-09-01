@@ -1,0 +1,33 @@
+.signup {
+    display: flex;
+    height: 600px;
+    background-color: darksalmon;
+    justify-content: center;
+}
+
+.childContainer {
+    flex: 0.3;
+    flex-direction: column;
+    background-color:rgba(255, 255, 255, 0.3);
+}
+
+.paramInput {
+    justify-content: 'space-between';
+    padding: 10px;
+    margin: 10px;
+}
+
+.textSignup {
+    font-family: 'Friday';
+    font-size: 50px;
+    margin: 30px;
+}
+
+.center {
+    justify-content: center;
+}
+
+.inputStyle {
+    border-radius: 4px;
+}
+

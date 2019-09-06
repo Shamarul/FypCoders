@@ -1,11 +1,10 @@
-
-.wrapper, html, body {
-  height: 100%;
-}
-
 .wrapper {
   display: flex;
+  flex: 1;
+  position: absolute; 
+  width: 100% !important; height: 100% !important;
   flex-direction: column;
+  background-color: blueviolet;
 }
 
 .content {

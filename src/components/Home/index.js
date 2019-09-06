@@ -3,7 +3,6 @@ import './index.css';
 import { BrowserRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 
-import Header from './Header';
 import Footer from './Footer';
 
 class Home extends Component {
@@ -15,9 +14,6 @@ class Home extends Component {
 
     return (
       <div className="Home">
-        <div>
-            <Header />
-        </div>
         <div className="body">
             <BrowserRouter>
             <div className="aboutProduct">

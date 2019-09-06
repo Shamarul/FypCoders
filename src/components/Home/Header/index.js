@@ -7,6 +7,8 @@ import { signOut } from '../../../actions/AuthActions';
 import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
 
+import { BrowserRouter, Link } from 'react-router-dom';
+
 const iconStyle = {
     color: 'white'
 }
@@ -24,13 +26,14 @@ class Header extends Component {
         if (signup) return <Redirect to='/signup' />
         
     return (
-      <div className="Header">
+        <div className="Header">
+        <BrowserRouter>
         <div className="shop">
             <p>ALOEALFA.COM</p>
         </div>
         <div className="menu">
             <div>
-                <p>Home</p>
+                <p><Link to="/">Home</Link></p>
             </div>
             <div>
                 <p>Product</p>
@@ -50,12 +53,13 @@ class Header extends Component {
                 <p>Shop</p>
             </div>
             <div>
-                <p onClick={()=>{this.setState({login:!login})}}>Login</p>
+              <p><Link to="/login">Login</Link></p>
             </div>
             <div>
-                <p onClick={()=>{this.setState({signup:!signup})}}>Sign Up</p>
+              <p><Link to="/signup">Sign Up</Link></p>
             </div>
         </div>
+        </BrowserRouter>
       </div>
     );
   }

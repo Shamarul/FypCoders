@@ -12,6 +12,7 @@ class Signup extends Component {
     displayName: '',
     signupFor: 'user',
     adminId: '',
+    login: false,
   }
 
   handleChange = (e) => {
@@ -32,58 +33,64 @@ class Signup extends Component {
 
   render() {
 
+    const { login, signup } = this.state;
+        if (login) return <Redirect to='/login' />
+
     const { authError } = this.props;
     const { signupFor } = this.state;
 
     return (
-      <div className="signup" style={{backgroundImage: `url(${BgImg})` }} align='center'>
-            <div className='childContainer'>
-              <div className='center'>
-                  <p className='textSignup'>Sign Up</p>
-              </div>
-              {signupFor === 'user'?
-                <form onSubmit={this.handleSubmit} className=''>
-                    <div className=''>
+      <div className="signup" style={{backgroundImage: `url(${BgImg})`, height: '100%', 
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover', justifyContent: 'center', alignContent: 'center'  }} align='center'>
+              <div className='childContainer'>
+                <div className='center'>
+                    <p className='textSignup'>Sign Up</p>
+                </div>
+                {signupFor === 'user'?
+                  <form onSubmit={this.handleSubmit} className=''>
                       <div className=''>
-                        <input type='text' id='displayName' onChange={this.handleChange} placeholder='Nick Name'/>
+                        <div className='paramInput'>
+                          <input className='field' type='text' id='displayName' onChange={this.handleChange} placeholder='Nick Name'/>
+                        </div>
+                        <div className='paramInput'>
+                          <input className='field' type='email' id='email' onChange={this.handleChange} placeholder='Email'/>
+                        </div>
+                        <div className='paramInput'>
+                          <input className='field' type='password' id='password' onChange={this.handleChange} placeholder='Password' />
+                        </div>
+                        <button className='button' >Create User </button>
+                        <p onClick={()=>{ this.setState({signupFor: 'admin'}) }}> Register Admin </p>
                       </div>
-                      <div className='paramInput'>
-                        <input type='email' id='email' onChange={this.handleChange} placeholder='Email'/>
-                      </div>
-                      <div className='paramInput'>
-                        <input type='password' id='password' onChange={this.handleChange} placeholder='Password' />
-                      </div>
-                      <button className='paramInput' >Create User </button>
-                      <p onClick={()=>{ this.setState({signupFor: 'admin'}) }}> Register Admin </p>
-                    </div>
-                    { authError ? <p>{authError}</p> : null }
-                </form> 
-              :
-                <form onSubmit={this.handleSubmitAdmin}>
-                    <div className=''>
+                      { authError ? <p>{authError}</p> : null }
+                  </form> 
+                :
+                  <form onSubmit={this.handleSubmitAdmin}>
                       <div className=''>
-                        <input className='inputStyle' type='text' id='displayName' onChange={this.handleChange} placeholder='Nick Name'/>
+                        <div className='paramInput'>
+                          <input className='field' type='text' id='displayName' onChange={this.handleChange} placeholder='Nick Name'/>
+                        </div>
+                        <div className='paramInput'>
+                          <input className='field' type='email' id='email' onChange={this.handleChange} placeholder='Email'/>
+                        </div>
+                        <div className='paramInput'>
+                          <input className='field'type='password' id='password' onChange={this.handleChange} placeholder='Password' />
+                        </div>
+                        <div className='paramInput'>
+                          <input className='field'type='text' id='adminId' onChange={this.handleChange} placeholder='Admin ID' />
+                        </div>
+                        <button className='button' >Create Admin</button>
+                        <p onClick={()=>{ this.setState({signupFor: 'user'}) }}> Register User </p>
                       </div>
-                      <div className='paramInput'>
-                        <input type='email' id='email' onChange={this.handleChange} placeholder='Email'/>
-                      </div>
-                      <div className='paramInput'>
-                        <input type='password' id='password' onChange={this.handleChange} placeholder='Password' />
-                      </div>
-                      <div className='paramInput'>
-                        <input type='text' id='adminId' onChange={this.handleChange} placeholder='Admin ID' />
-                      </div>
-                      <button className='paramInput' >Create Admin</button>
-                      <p onClick={()=>{ this.setState({signupFor: 'user'}) }}> Register User </p>
-                    </div>
-                </form>
-            }
-              <div>
-                <p>
-                  Already a member? Log in
-                </p>
+                  </form>
+                }
+                  <div>
+                    <p onClick={()=>{this.setState({login:!login})}}>
+                      Already a member? Login
+                    </p>
+                  </div>
               </div>
-            </div>
       </div>
     );
   }

@@ -60,6 +60,9 @@ class Signup extends Component {
                         <div className='paramInput'>
                           <input className='field' type='password' id='password' onChange={this.handleChange} placeholder='Password' />
                         </div>
+                        <div className='paramInput'>
+                          <input type="hidden" className='field' id='signupFor' onChange={this.handleChange} placeholder='Role' />
+                        </div>
                         <button className='button' >Create User </button>
                         <p onClick={()=>{ this.setState({signupFor: 'admin'}) }}> Register Admin </p>
                       </div>
@@ -79,6 +82,9 @@ class Signup extends Component {
                         </div>
                         <div className='paramInput'>
                           <input className='field'type='text' id='adminId' onChange={this.handleChange} placeholder='Admin ID' />
+                        </div>
+                        <div className='paramInput'>
+                          <input type="hidden" className='field' id='signupFor' onChange={this.handleChange} placeholder='Role' />
                         </div>
                         <button className='button' >Create Admin</button>
                         <p onClick={()=>{ this.setState({signupFor: 'user'}) }}> Register User </p>

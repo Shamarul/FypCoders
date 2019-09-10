@@ -16,10 +16,15 @@ html {
   height: 100%;
 }
 body {
-  height: 100%; background-color: aqua;
+  height: 100%;
 }
 
 @font-face {
   font-family: 'Friday';
   src: local('Friday'), url(./assets/fonts/Friday.otf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Zuka';
+  src: local('Zuka'), url(./assets/fonts/Zuka.ttf) format('truetype');
 }

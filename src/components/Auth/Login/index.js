@@ -8,7 +8,6 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    loginStatus: false,
   }
 
   handleChange = (e) => {
@@ -26,24 +25,29 @@ class Login extends Component {
 
   render() {
 
-    // if(this.state.loginStatus) return <Redirect to='/home' />
     const { authError , auth } = this.props;
-        // if (auth.uid) return <Redirect to='/' />
+        if (auth.uid) return <Redirect to='/' />
 
     return (
-      <div className="Login">
-            <div>
-                <p>Log In</p>
+      <div className="Login" align="center">
+            <div className="containerLogin">
+              <div>
+                  <p className="textSignup">Log In</p>
+              </div>
+              <form onSubmit={this.handleSubmit} className='formLogin'>
+                  <div className='paramInput'>
+                    <input className='field' type='email' id='email' onChange={this.handleChange} placeholder='Email'/>
+                  </div>
+                  <div className='paramInput'>
+                    <input className='field' type='password' id='password' onChange={this.handleChange} placeholder='Password'/>
+                  </div>
+                      
+                  <button className='buttonLogin'>Login</button>
+                  <div>
+                      { authError ? <p>{authError}</p> : null }
+                  </div>
+              </form>
             </div>
-            <form onSubmit={this.handleSubmit} className=''>
-                    <h5 className='' > Sign In </h5>
-                    <input type='email' id='email' onChange={this.handleChange} />
-                    <input type='password' id='password' onChange={this.handleChange} />
-                    <button>Login</button>
-                    <div>
-                        { authError ? <p>{authError}</p> : null }
-                    </div>
-            </form>
       </div>
     );
   }

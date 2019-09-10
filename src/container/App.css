@@ -2,13 +2,23 @@
   display: flex;
   flex: 1;
   position: absolute; 
-  width: 100% !important; height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
   flex-direction: column;
-  background-color: blueviolet;
+  background-color: transparent;
 }
 
+.bodyContent {
+  flex:1
+}
 .content {
   display: flex;
   flex: 1 ;
   flex-direction:row;
+}
+
+.menu {
+  display: flex;
+  align-self: flex-end;
+  font-weight: bold;
 }

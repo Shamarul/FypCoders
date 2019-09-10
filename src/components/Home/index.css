@@ -2,24 +2,59 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: darksalmon
+    background-color: transparent;
+}
+
+.bodyHome {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .body {
     display: flex;
     flex: 1;
     flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.body1 {
+    padding: 10px;
+    align-self: flex-end;
+    padding-bottom: 50px;
+}
+
+.body2 {
+    padding: 10px;
+    align-self: flex-start;
+}
+
+.body2chidlren {
+    background-color: rgba(255,255,255,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    border-radius: 200px;
+}
+
+.body3 {
+    padding: 10px;
+    align-self: center;
+    padding-left: 30px;
 }
 
 .aboutProduct {
-    flex: 1;
+    flex: 0.1;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .productContainer {
-    flex: 1;
+    flex: 0.9;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,7 +62,24 @@
 }
 
 .product {
+    justify-content: center;
+    align-content: center;
     background-color: azure;
-    padding: 100px;
-    margin: 40px
+    padding: 5px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    padding: 40px;
+    background: #419be0;
+  }
+  
+.slick-slide img {
+    margin: auto;
+}
+
+.Zuka {
+    font-family: 'Zuka';
 }

@@ -9,6 +9,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import _ from 'lodash';
 import Modal from 'react-awesome-modal';
+import { deleteCart } from '../../actions/UserAction';
 
 class Cart extends Component {
 
@@ -32,24 +33,42 @@ class Cart extends Component {
       });
   }
 
+  removeCart= (key) =>{
+    this.props.deleteCart(this.props.auth.uid, key);
+  }
+
   renderCartItem = () => {
     let no = 1;
-    let grandTotal = 0;
 
     return _.map(this.props.carts, (cart, key) => {
-        grandTotal = grandTotal + (cart.price*cart.quantity);
+        if(cart){
         return (
-            <div align='center' onClick={() => this.openModal(cart)} key={key} 
-            style={{display:"flex", flexDirection:"row", justifyContent: "flex-start", paddingLeft:"40px", alignContent: "center", alignItems: "center"}}>
-              <p style={{paddingLeft:"20px"}}>{no++}.</p>
-              <img style={{paddingLeft:"20px"}} src={cart.url} height="100px" width="100px"/>
-              <p style={{paddingLeft:"20px"}}>{cart.itemName}</p>
-              <p style={{paddingLeft:"20px"}}>Price: {cart.price}</p>
-              <p style={{paddingLeft:"20px"}}>Quantity: {cart.quantity}</p>
-              <p style={{paddingLeft:"20px"}}>Total: {cart.price*cart.quantity}</p>
+            <div key={key} >
+                <div align='center' onClick={() => this.openModal(cart)} 
+                    style={{display:"flex", flexDirection:"row", justifyContent: "flex-start", paddingLeft:"40px", alignContent: "center", alignItems: "center"}}>
+                    <p style={{paddingLeft:"20px"}}>{no++}.</p>
+                    <img style={{paddingLeft:"20px"}} src={cart.url} height="100px" width="100px"/>
+                    <p style={{paddingLeft:"20px"}}>{cart.itemName}</p>
+                    <p style={{paddingLeft:"20px"}}>Price: {cart.price}</p>
+                    <p style={{paddingLeft:"20px"}}>Quantity: {cart.quantity}</p>
+                    <p style={{paddingLeft:"20px"}}>Total: {cart.price*cart.quantity}</p>
+                    <p onClick={()=>{this.removeCart(key)}} style={{marginLeft:"20px", backgroundColor:"red", borderRadius:"50%", padding:"5px"}}> X </p>
+                </div>
             </div>
         );
+        }
     });
+  }
+
+  getGrandTotal = () => {
+    let grandTotal = 0;
+    _.map(this.props.carts, (cart, key) => {
+        if(cart){
+        grandTotal = grandTotal + (cart.price*cart.quantity);
+        }
+    });
+
+    return grandTotal;
   }
 
   render() {
@@ -66,7 +85,11 @@ class Cart extends Component {
                     this.props.carts?
                         <div>
                             { this.renderCartItem() }
-                            <p>GrandTotal : RM{this.state.grandTotal}</p>
+                            <p style={{display:"flex", justifyContent:"flex-end", padding:"30px"}}>GrandTotal : RM{this.getGrandTotal()}</p>
+                            <div align="center" style={{margin:"20px"}}>
+                            <p align="center" style={{display:"flex", justifyContent:"center", padding:"30px", alignContent : "center",
+                            backgroundColor:"green", margin:"20px", width: "40%", borderRadius: "25px"}}>Check Out</p>
+                            </div>
                         </div>
                     :
                         <div align="center" style={{display:"flex",justifyContent:"center",flexDirection:'column'}}>
@@ -94,7 +117,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // addCart: (newCart) => dispatch(addCart(newCart)),
+        deleteCart: (uid, key) => dispatch(deleteCart(uid, key)),
     }
   }
 

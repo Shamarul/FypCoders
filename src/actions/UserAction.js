@@ -42,3 +42,18 @@ export const addCart = (newCart) => {
         })
     }
 }
+
+export const deleteCart = (uid, key) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        // make async call to database
+        
+        const firestore = getFirestore();
+  
+        firestore.collection('carts').doc(uid)
+        .collection('cart').doc(key).delete().then(() => {
+            dispatch({ type: 'DELETE_TASK' , key  });
+        }).catch((err) => {
+            dispatch({ type: 'DELETE_TASK_ERROR', err });
+        })
+    }
+}

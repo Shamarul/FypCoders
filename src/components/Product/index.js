@@ -3,6 +3,7 @@ import './index.css';
 import { BrowserRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from 'react-awesome-modal';
+import { addCart } from '../../actions/UserAction';
 
 import Slider from "react-slick";
 import Footer from '../Home/Footer';
@@ -22,7 +23,9 @@ class Product extends Component {
         url:'',
         description:'',
         price: '',
+        itemName: '',
         quantity: 1,
+        uid: '',
     }
     this.settings = {
       dots: true,
@@ -34,12 +37,12 @@ class Product extends Component {
   }
 
   componentDidMount () {
-
+    this.setState({uid: this.props.uid});
   }
 
   openModal = (item) => {
     this.setState({
-      price:item.price, title:item.title, url:item.url, description:item.description ,visible : true
+      price:item.price, title:item.title, url:item.url, description:item.description ,visible : true, itemName: item.itemName
     });
   }
 
@@ -52,8 +55,9 @@ class Product extends Component {
   renderItemList = () => {
     return _.map(this.props.items, (item, key) => {
         return (
-            <div align='center' onClick={() => this.openModal(item)}>
+            <div align='center' onClick={() => this.openModal(item)} key={key}>
               <img src={item.url} height="200px" width="200px"/>
+              <p>{item.itemName}</p>
               <p>RM {item.price}</p>
               <p>{item.description}</p>
             </div>
@@ -71,6 +75,14 @@ class Product extends Component {
     )
   }
 
+  addToCart = () => {
+
+    this.props.addCart(this.state);
+
+    this.closeModal();
+    alert(this.state.quantity+" of "+this.state.itemName+" added to the cart !");
+  }
+
   render() {
 
     const { addProduct } = this.state;
@@ -78,10 +90,11 @@ class Product extends Component {
 
     return (
       <div className="Home">
-        <Modal visible={this.state.visible} width="80%" height="80%" effect="fadeInUp" onClickAway={() => this.closeModal()}>
-          <div align="center">
-              <h1>{this.state.title}</h1>
+        <Modal visible={this.state.visible} width="80%" min-Height="80%" effect="fadeInUp" onClickAway={() => this.closeModal()}>
+          <div align="center" style={{padding: "20px"}}>
+              <h1>{this.state.itemName}</h1>
               <img src={this.state.url} height="300px" width="400px"/>
+              <p>{this.state.itemName}</p>
               <p>Price: Rm {this.state.price}</p>
               <p>Description :{this.state.description}</p>
               <div className="quantity">
@@ -92,7 +105,7 @@ class Product extends Component {
               </div>
               <p>Total: {this.state.price*this.state.quantity}</p>
 
-              <p><a href="javascript:void(0);" onClick={() => this.closeModal()}>ADD TO CART</a></p>
+              <p><a href="javascript:void(0);" onClick={() => this.addToCart()}>ADD TO CART</a></p>
 
               <a href="javascript:void(0);" onClick={() => this.closeModal()}>CANCEL</a>
           </div>
@@ -132,13 +145,19 @@ const mapStateToProps = (state) => {
       auth: state.firebase.auth,
       role: state.firebase.profile.role,
       items: state.firestore.data.items,
+      uid: state.firebase.auth.uid,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      addCart: (newCart) => dispatch(addCart(newCart)),
   }
 }
 
 
-
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect((props) =>[
       { 
           collection: 'items',

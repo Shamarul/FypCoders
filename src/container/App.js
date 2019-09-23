@@ -8,7 +8,8 @@ import Header from '../components/Home/Header'
 import product from '../components/Product';
 import about from '../components/About';
 import contact from '../components/Contact';
-import BgImg from '../assets/img/fypbg.jpeg'
+import additem from '../components/Additem';
+import BgImg from '../assets/img/fypbg.jpeg';
 import { connect } from 'react-redux';
 
 import { signOut } from '../actions/AuthActions';
@@ -59,7 +60,11 @@ class App extends Component {
                 </div>
                 <div>
                   {this.props.auth.uid?
+                    <div>
+                    <p>Your are logged in as {this.props.role}</p>
+                    <p>Welcome Back {this.props.displayName}.</p>
                     <p onClick={()=>{this.props.signOut();}}>Sign Out</p>
+                    </div>
                   :
                     <p><Link to="/login" style={{ textDecoration: 'none' }}>Login</Link></p>
                   }
@@ -81,6 +86,7 @@ class App extends Component {
             <Route path='/product' component={product} />
             <Route path='/about' component={about} />
             <Route path='/contact' component={contact} />
+            <Route path='/additem' component={additem} />
             <Route path='/' component={Home} exact/>
           </div>
         </BrowserRouter>
@@ -94,7 +100,10 @@ const mapStateToProps = (state) => {
   console.log('mapStateToProps', state)
   return {
       authError: state.auth.authError,
-      auth: state.firebase.auth
+      auth: state.firebase.auth,
+      displayName: state.firebase.profile.displayName,
+      role: state.firebase.profile.role,
+      adminId: state.firebase.profile.adminid
   }
 }
 

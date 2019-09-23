@@ -10,3 +10,16 @@
     width: 90%;
     padding-left: 5%;
 }
+
+.addItem {
+    background-color: blue;
+    width: 30%;
+    align-self: center;
+    margin: 15; 
+    border-radius: 25px;
+    transition: 0.3s all;
+}
+
+.addItem:hover {
+    background-color: lightblue;
+}

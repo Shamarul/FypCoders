@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './index.css';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signUp } from '../../../actions/AuthActions';
+import { signUp, signUpAdmin } from '../../../actions/AuthActions';
 import BgImg from '../../../assets/img/fypbg.jpeg'
 
 class Signup extends Component {
@@ -33,8 +33,10 @@ class Signup extends Component {
 
   render() {
 
-    const { login, signup } = this.state;
+    const { authSuccess } = this.props;
+    const { login } = this.state;
         if (login) return <Redirect to='/login' />
+        if (authSuccess === 'signup') return <Redirect to='/login' />
 
     const { authError } = this.props;
     const { signupFor } = this.state;
@@ -66,7 +68,6 @@ class Signup extends Component {
                         <button className='button' >Create User </button>
                         <p onClick={()=>{ this.setState({signupFor: 'admin'}) }}> Register Admin </p>
                       </div>
-                      { authError ? <p>{authError}</p> : null }
                   </form> 
                 :
                   <form onSubmit={this.handleSubmitAdmin}>
@@ -78,10 +79,10 @@ class Signup extends Component {
                           <input className='field' type='email' id='email' onChange={this.handleChange} placeholder='Email'/>
                         </div>
                         <div className='paramInput'>
-                          <input className='field'type='password' id='password' onChange={this.handleChange} placeholder='Password' />
+                          <input className='field' type='password' id='password' onChange={this.handleChange} placeholder='Password' />
                         </div>
                         <div className='paramInput'>
-                          <input className='field'type='text' id='adminId' onChange={this.handleChange} placeholder='Admin ID' />
+                          <input className='field' type='text' id='adminId' onChange={this.handleChange} placeholder='Admin ID' />
                         </div>
                         <div className='paramInput'>
                           <input type="hidden" className='field' id='signupFor' onChange={this.handleChange} placeholder='Role' />
@@ -91,6 +92,13 @@ class Signup extends Component {
                       </div>
                   </form>
                 }
+                  <div>
+                    {this.props.authError&&
+                      <p style={{color:'red'}}>
+                        {this.props.authError}
+                      </p>
+                    }
+                  </div>
                   <div>
                     <p onClick={()=>{this.setState({login:!login})}}>
                       Already a member? Login
@@ -106,13 +114,15 @@ const mapStateToProps = (state) => {
   console.log('mapStateToProps', state)
   return {
       authError: state.auth.authError,
+      authSuccess: state.auth.authSuccess,
       auth: state.firebase.auth
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      signUp: (newUser) => dispatch(signUp(newUser))
+      signUp: (newUser) => dispatch(signUp(newUser)),
+      signUpAdmin: (newUser) => dispatch(signUpAdmin(newUser))
   }
 }
 

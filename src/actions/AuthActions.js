@@ -55,9 +55,34 @@ export const signUp = (newUser) => {
         ).then((resp) => {
             return firestore.collection('users').doc(resp.user.uid).set({
                 displayName: newUser.displayName,
-                // role: newUser.role,
+                role: newUser.signupFor,
                 // photoURL: newUser.photoURL,
-                // createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            })
+        }).then(() => {
+            dispatch({ type: 'SIGNUP_SUCCESS' })
+            secondaryFirebase.auth().signOut();
+        }).catch((err) => {
+            dispatch({ type: 'SIGNUP_ERROR', err })
+        })
+    }
+}
+
+export const signUpAdmin = (newUser) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        // const firebase = getFirebase();
+        const firestore = getFirestore();
+
+        secondaryFirebase.auth().createUserWithEmailAndPassword(
+            newUser.email,
+            newUser.password
+        ).then((resp) => {
+            return firestore.collection('users').doc(resp.user.uid).set({
+                displayName: newUser.displayName,
+                role: newUser.signupFor,
+                adminid: newUser.adminId,
+                // photoURL: newUser.photoURL,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             })
         }).then(() => {
             dispatch({ type: 'SIGNUP_SUCCESS' })

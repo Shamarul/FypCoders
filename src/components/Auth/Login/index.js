@@ -25,7 +25,7 @@ class Login extends Component {
 
   render() {
 
-    const { authError , auth } = this.props;
+    const { authError , auth, authSuccess } = this.props;
         if (auth.uid) return <Redirect to='/' />
 
     return (
@@ -45,6 +45,7 @@ class Login extends Component {
                   <button className='buttonLogin'>Login</button>
                   <div>
                       { authError ? <p>{authError}</p> : null }
+                      { authSuccess === 'signup'&& <p>Sign Up Success Please login</p>}
                   </div>
               </form>
             </div>
@@ -57,6 +58,7 @@ const mapStateToProps = (state) => {
   console.log('mapStateToProps', state)
   return {
       authError: state.auth.authError,
+      authSuccess: state.auth.authSuccess,
       auth: state.firebase.auth
   }
 }

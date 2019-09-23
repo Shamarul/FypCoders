@@ -9,6 +9,8 @@ import product from '../components/Product';
 import about from '../components/About';
 import contact from '../components/Contact';
 import additem from '../components/Additem';
+import cart from '../components/Cart';
+import profile from '../components/Profile';
 import BgImg from '../assets/img/fypbg.jpeg';
 import { connect } from 'react-redux';
 
@@ -50,12 +52,12 @@ class App extends Component {
             <div className="setting">
                 <div>
                   {this.props.auth.uid&&
-                    <p><AccountCircleOutlinedIcon style={{color:'gray', fontSize:33}}/></p>
+                    <p><Link to="/profile" style={{ textDecoration: 'none' }}><AccountCircleOutlinedIcon style={{color:'gray', fontSize:33}}/></Link></p>
                   }
                 </div>
                 <div>
                   {this.props.auth.uid&&
-                    <p><ShoppingCartOutlinedIcon style={{color:'gray', fontSize:30}}/></p>
+                    <p><Link to="/cart" style={{ textDecoration: 'none' }}><ShoppingCartOutlinedIcon style={{color:'gray', fontSize:30}}/></Link></p>
                   }
                 </div>
                 <div>
@@ -87,6 +89,8 @@ class App extends Component {
             <Route path='/about' component={about} />
             <Route path='/contact' component={contact} />
             <Route path='/additem' component={additem} />
+            <Route path='/cart' component={cart} />
+            <Route path='/profile' component={profile} />
             <Route path='/' component={Home} exact/>
           </div>
         </BrowserRouter>

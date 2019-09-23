@@ -141,6 +141,7 @@ const mapStateToProps = (state) => {
         auth: state.firebase.auth,
         role: state.firebase.profile.role,
         userUid: state.firebase.auth.uid,
+        success: state.admin.success,
   } 
 }
 

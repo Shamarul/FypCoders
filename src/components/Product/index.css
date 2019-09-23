@@ -23,3 +23,9 @@
 .addItem:hover {
     background-color: lightblue;
 }
+
+.quantity {
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}

@@ -9,7 +9,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import _ from 'lodash';
 import Modal from 'react-awesome-modal';
-import { deleteCart } from '../../actions/UserAction';
+import { deleteCart, checkout } from '../../actions/UserAction';
 
 class Cart extends Component {
 
@@ -71,6 +71,10 @@ class Cart extends Component {
     return grandTotal;
   }
 
+  checkout = () => {
+    this.props.checkout(this.props.auth.uid);
+  }
+
   render() {
 
     const { shopping, grandTotal } = this.state;
@@ -87,7 +91,7 @@ class Cart extends Component {
                             { this.renderCartItem() }
                             <p style={{display:"flex", justifyContent:"flex-end", padding:"30px"}}>GrandTotal : RM{this.getGrandTotal()}</p>
                             <div align="center" style={{margin:"20px"}}>
-                            <p align="center" style={{display:"flex", justifyContent:"center", padding:"30px", alignContent : "center",
+                            <p onClick={()=>{this.checkout()}} align="center" style={{display:"flex", justifyContent:"center", padding:"30px", alignContent : "center",
                             backgroundColor:"green", margin:"20px", width: "40%", borderRadius: "25px"}}>Check Out</p>
                             </div>
                         </div>
@@ -118,6 +122,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteCart: (uid, key) => dispatch(deleteCart(uid, key)),
+        checkout: (uid) => dispatch(checkout(uid)),
     }
   }
 

@@ -71,3 +71,47 @@ export const checkout = (uid) => {
         })
     }
 }
+
+export const updateAddress = (data) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        // const firebase = getFirebase();
+        const firestore = getFirestore();
+
+        const ref = firestore.collection('address').doc();
+        const key = ref.id;
+
+        firestore.collection('address').doc(data.uid).set({
+                address1: data.address1,
+                address2: data.address2,
+                poscode: data.poscode,
+                state: data.state,
+                country: data.country,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }).then(() => {
+            dispatch({ type: 'ADDRESS_SUCCESS' })
+        }).catch((err) => {
+            dispatch({ type: 'ADDRESS_ERROR', err })
+        })
+    }
+}
+
+export const updateWallet = (data) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        // const firebase = getFirebase();
+        const firestore = getFirestore();
+
+        const ref = firestore.collection('card').doc();
+        const key = ref.id;
+
+        firestore.collection('card').doc(data.uid).set({
+                cardno: data.cardno,
+                exp: data.exp,
+                code: data.code,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }).then(() => {
+            dispatch({ type: 'WALLET_SUCCESS' })
+        }).catch((err) => {
+            dispatch({ type: 'WALLET_ERROR', err })
+        })
+    }
+}

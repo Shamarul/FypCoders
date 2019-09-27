@@ -10,27 +10,32 @@ import { compose } from 'redux';
 import _ from 'lodash';
 import Modal from 'react-awesome-modal';
 import { deleteCart, checkout } from '../../actions/UserAction';
+import Maybank from '../../assets/img/maybank.png';
+import Rhb from '../../assets/img/rhb.png';
 
 class Cart extends Component {
 
   constructor(props) {
       super(props);
       this.state = {
+          visible : false,
           shopping: false,
           grandTotal: 0,
+          paymentType: "",
+          profile: false,
       }
   }
 
-  openModal = (item) => {
+  openModal = () => {
     this.setState({
-      price:item.price, title:item.title, url:item.url, description:item.description ,visible : true, itemName: item.itemName
+      visible : true
     });
   }
 
   closeModal() {
       this.setState({
-          visible : false, quantity: 1,
-      });
+          visible : false
+      })
   }
 
   removeCart= (key) =>{
@@ -77,10 +82,31 @@ class Cart extends Component {
 
   render() {
 
-    const { shopping, grandTotal } = this.state;
+    const { shopping, grandTotal, profile } = this.state;
         if (shopping) return <Redirect to='/product' />
+        if (profile) return <Redirect to='/profile' />
+
     return (
       <div className="Home">
+        <Modal visible={this.state.visible} width="80%" min-Height="80%" effect="fadeInUp" onClickAway={() => this.closeModal()}>
+          <div align="center" style={{padding: "20px"}}>
+              <p>Payment</p>
+              { this.state.paymentType === ""?
+                  this.props.card ? // && this.props.address
+                  <div style={{paddingTop:"40px"}}>
+                    <img onClick={()=>{this.setState({paymentType: "Maybank"})}} src={Maybank} height="100px" width="200px" />
+                    <img onClick={()=>{this.setState({paymentType: "Rhb"})}} src={Rhb} height="100px" width="200px" />
+                  </div>
+                  :
+                  <p onClick={()=>this.setState({profile:true})}>Please Enter your detail in profile page first before checkout [Click here]</p>
+              :
+                <div>
+                  <p>{this.state.paymentType}</p>
+                  <button onClick={()=>{this.closeModal(); alert('Thank you')}}>Check out</button>
+                </div>
+              }
+          </div>
+        </Modal>
         <div className="body">
             <div className="cart">
                 <h1 style={{paddingLeft:"20px"}}>My Cart</h1>
@@ -91,7 +117,7 @@ class Cart extends Component {
                             { this.renderCartItem() }
                             <p style={{display:"flex", justifyContent:"flex-end", padding:"30px"}}>GrandTotal : RM{this.getGrandTotal()}</p>
                             <div align="center" style={{margin:"20px"}}>
-                            <p onClick={()=>{this.checkout()}} align="center" style={{display:"flex", justifyContent:"center", padding:"30px", alignContent : "center",
+                            <p onClick={()=>{this.openModal()}} align="center" style={{display:"flex", justifyContent:"center", padding:"30px", alignContent : "center",
                             backgroundColor:"green", margin:"20px", width: "40%", borderRadius: "25px"}}>Check Out</p>
                             </div>
                         </div>
@@ -116,6 +142,8 @@ const mapStateToProps = (state) => {
       authError: state.auth.authError,
       auth: state.firebase.auth,
       carts: state.firestore.data.carts,
+      card: state.firestore.data.card,
+      address: state.firestore.data.address,
   }
 }
 
@@ -136,6 +164,15 @@ export default compose(
             }],
                 
             storeAs: 'carts'
-        }
+        },
+        {
+          collection: 'card',  doc: props.auth.uid,       
+          storeAs: 'card'
+        },
+        {
+          collection: 'address',  doc: props.auth.uid,
+              
+          storeAs: 'address'
+      }
     ])
   )(Cart);

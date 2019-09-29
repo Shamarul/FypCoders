@@ -88,7 +88,6 @@ class Profile extends Component {
                   <div className='paramInput'>
                     <input className='field' type='text' id='country' onChange={this.handleChange} placeholder='country' value={this.state.country}/>
                   </div>
-                      
                   <button className='buttonLogin'>Update</button>
               </form>
             </div>

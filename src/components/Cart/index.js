@@ -12,6 +12,7 @@ import Modal from 'react-awesome-modal';
 import { deleteCart, checkout } from '../../actions/UserAction';
 import Maybank from '../../assets/img/maybank.png';
 import Rhb from '../../assets/img/rhb.png';
+import Loader from 'react-loader-spinner'
 
 class Cart extends Component {
 
@@ -23,6 +24,7 @@ class Cart extends Component {
           grandTotal: 0,
           paymentType: "",
           profile: false,
+          proceedPayment: false,
       }
   }
 
@@ -77,7 +79,11 @@ class Cart extends Component {
   }
 
   checkout = () => {
-    this.props.checkout(this.props.auth.uid);
+    return _.map(this.props.carts, (cart, key) => {
+      if(cart){
+        this.props.checkout(this.props.auth.uid, cart, key, this.props.address);
+      }
+  });
   }
 
   render() {
@@ -92,17 +98,36 @@ class Cart extends Component {
           <div align="center" style={{padding: "20px"}}>
               <p>Payment</p>
               { this.state.paymentType === ""?
-                  this.props.card ? // && this.props.address
+                  this.props.card && this.props.address? // && this.props.address
                   <div style={{paddingTop:"40px"}}>
+                    <p> Selected your save card bank to continue</p>
                     <img onClick={()=>{this.setState({paymentType: "Maybank"})}} src={Maybank} height="100px" width="200px" />
                     <img onClick={()=>{this.setState({paymentType: "Rhb"})}} src={Rhb} height="100px" width="200px" />
                   </div>
                   :
-                  <p onClick={()=>this.setState({profile:true})}>Please Enter your detail in profile page first before checkout [Click here]</p>
+                  <p onClick={()=>this.setState({profile:true})}>Please Enter your details in profile page to proceed payment [Click here]</p>
               :
+                this.state.proceedPayment?
+                <Loader
+                  type="Puff"
+                  color="#00BFFF"
+                  height={100}
+                  width={100}
+                  timeout={3000} //3 secs
+
+	              />
+                :
                 <div>
                   <p>{this.state.paymentType}</p>
-                  <button onClick={()=>{this.closeModal(); alert('Thank you')}}>Check out</button>
+                  <button onClick={()=>{this.setState({proceedPayment: true});setTimeout(
+                      function() {
+                        this.closeModal();
+                        alert('Payment succeed !! Your item will be deliver in 3days working day');
+                        this.checkout();
+                      }
+                      .bind(this),
+                      3500
+                  );}}>Continue</button>
                 </div>
               }
           </div>
@@ -150,7 +175,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         deleteCart: (uid, key) => dispatch(deleteCart(uid, key)),
-        checkout: (uid) => dispatch(checkout(uid)),
+        checkout: (uid, cart, key, address) => dispatch(checkout(uid, cart, key, address)),
     }
   }
 

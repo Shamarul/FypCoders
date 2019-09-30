@@ -72,7 +72,28 @@ class Profile extends Component {
         <div className="body" style={{flexDirection:"row", paddingLeft: "10%"}}>
             <div>
               <h3>My Address</h3>
-              <form onSubmit={this.handleSubmitAddress} className='formLogin'>
+              {
+                this.props.address?
+                <div  className='formLogin'>
+                  <div className='paramInput'>
+                    <input className='field' type='text' id='address1' onChange={this.handleChange} placeholder={this.props.address.address1===""?'address 1':this.props.address.address1} value={this.state.address1}/>
+                  </div>
+                  <div className='paramInput'>
+                    <input className='field' type='text' id='address2' onChange={this.handleChange} placeholder={this.props.address.address2===""?'address 2':this.props.address.address2} value={this.state.address2}/>
+                  </div>
+                  <div className='paramInput'>
+                    <input className='field' type='text' id='poscode' onChange={this.handleChange} placeholder={this.props.address.poscode===""?'poscode':this.props.address.poscode} value={this.state.poscode}/>
+                  </div>
+                  <div className='paramInput'>
+                    <input className='field' type='text' id='state' onChange={this.handleChange} placeholder={this.props.address.state===""?'state':this.props.address.state} value={this.state.state}/>
+                  </div>
+                  <div className='paramInput'>
+                    <input className='field' type='text' id='country' onChange={this.handleChange} placeholder={this.props.address.country===""?'country':this.props.address.country} value={this.state.country}/>
+                  </div>
+                  <button className='buttonLogin' onClick={this.handleSubmitAddress}>Update</button>
+              </div>
+                :
+                <div  className='formLogin'>
                   <div className='paramInput'>
                     <input className='field' type='text' id='address1' onChange={this.handleChange} placeholder='address 1' value={this.state.address1}/>
                   </div>
@@ -88,12 +109,29 @@ class Profile extends Component {
                   <div className='paramInput'>
                     <input className='field' type='text' id='country' onChange={this.handleChange} placeholder='country' value={this.state.country}/>
                   </div>
-                  <button className='buttonLogin'>Update</button>
-              </form>
+                  <button className='buttonLogin' onClick={this.handleSubmitAddress}>Update</button>
+              </div>
+              }
             </div>
             <div>
             <h3>My Wallet</h3>
-            <form onSubmit={this.handleSubmitWallet} className='formLogin'>
+            {
+              this.props.card?
+              <div  className='formLogin'>
+                  <div className='paramInput'>
+                    <input className='field' type='text' id='cardno' onChange={this.handleChange} placeholder={this.props.card.cardno} value={this.state.cardno}/>
+                  </div>
+                  <div className='paramInput'>
+                    <input className='field' type='text' id='exp' onChange={this.handleChange} placeholder={this.props.card.exp} value={this.state.exp}/>
+                  </div>
+                  <div className='paramInput'>
+                    <input className='field' type='text' id='code' onChange={this.handleChange} placeholder={this.props.card.code} value={this.state.code}/>
+                  </div>
+                      
+                  <button className='buttonLogin' onClick={this.handleSubmitWallet}>Update</button>
+              </div>
+              :
+              <form onSubmit={this.handleSubmitWallet} className='formLogin'>
                   <div className='paramInput'>
                     <input className='field' type='text' id='cardno' onChange={this.handleChange} placeholder='card no' value={this.state.cardno}/>
                   </div>
@@ -106,6 +144,7 @@ class Profile extends Component {
                       
                   <button className='buttonLogin'>Update</button>
               </form>
+            }
             </div>
         </div>
         <div>
@@ -117,7 +156,7 @@ class Profile extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps... ',state.firestore.data.card,)
+  // console.log('mapStateToProps... ',state.firestore.data.card,)
   return {
       authError: state.auth.authError,
       auth: state.firebase.auth,
@@ -130,7 +169,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       updateWallet: (data) => dispatch(updateWallet(data)),
-      updateAddress: (data) => dispatch(updateAddress(data)),
+      updateAddress: (dataAddress) => dispatch(updateAddress(dataAddress)),
     }
   }
 

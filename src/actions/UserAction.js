@@ -58,16 +58,30 @@ export const deleteCart = (uid, key) => {
     }
 }
 
-export const checkout = (uid) => {
+export const checkout = (uid, cart, key, address) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         // make async call to database
         
         const firestore = getFirestore();
-  
-        firestore.collection('carts').doc(uid).delete().then(() => {
-            dispatch({ type: 'DELETE_TASK' , uid  });
+
+        firestore.collection('deliveries').doc(uid).collection('delivery').doc(key).set({
+            itemName: cart.itemName,
+            price: cart.price,
+            description: cart.description,
+            quantity: cart.quantity,
+            url: cart.url,
+            address: address.address1+' '+address.address2+' '+address.poscode+' '+address.state+' '+address.country,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }).then(() => {
+            dispatch({ type: 'DELIVERY_SUCCESS' })
         }).catch((err) => {
-            dispatch({ type: 'DELETE_TASK_ERROR', err });
+            dispatch({ type: 'DELIVERY_ERROR', err })
+        })
+  
+        firestore.collection('carts').doc(uid).collection('cart').doc(key).delete().then(() => {
+            dispatch({ type: 'CHECKOUT_SUCCESS' , uid  });
+        }).catch((err) => {
+            dispatch({ type: 'CHECKOUT_ERROR', err });
         })
     }
 }

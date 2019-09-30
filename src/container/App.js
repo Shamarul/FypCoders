@@ -16,14 +16,24 @@ import { connect } from 'react-redux';
 
 import { signOut } from '../actions/AuthActions';
 
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Redirect } from 'react-router-dom';
 
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
 class App extends Component {
 
+  constructor(props){
+    super(props);
+    this.state={
+        signout:false,
+    };
+  }
+
+
   render() {
+    // const { signout } = this.state;
+    //     if (signout) return <Redirect to='/login' />
     return (
       <div className="wrapper" style={{backgroundImage: `url(${BgImg})`, height: '100%', 
       backgroundPosition: 'center',
@@ -65,7 +75,7 @@ class App extends Component {
                     <div>
                     <p>Your are logged in as {this.props.role}</p>
                     <p>Welcome Back {this.props.displayName}.</p>
-                    <p onClick={()=>{this.props.signOut();}}>Sign Out</p>
+                    <p onClick={()=>{this.props.signOut();this.setState({signout: true})}}>Sign Out</p>
                     </div>
                   :
                     <p><Link to="/login" style={{ textDecoration: 'none' }}>Login</Link></p>

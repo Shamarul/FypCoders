@@ -20,17 +20,24 @@ const config = {
 var secondaryFirebase = firebase.initializeApp(config, "Secondary");
 
 export const signIn = (credentials) => {
-    return (dispatch, getState, {getFirebase}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
+        const firestore = getFirestore();
 
         firebase.auth().signInWithEmailAndPassword(
             credentials.email,
             credentials.password
-        ).then(() => {
+        ).then((resp) => {
+            return firestore.collection('users').doc(resp.user.uid).update({
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            })
+        })
+        .then(() => {
             dispatch({ type: 'LOGIN_SUCCESS' })
         }).catch((err) => {
             dispatch({ type: 'LOGIN_ERROR', err })
         })
+       
     }
 }
 
@@ -56,6 +63,7 @@ export const signUp = (newUser) => {
             return firestore.collection('users').doc(resp.user.uid).set({
                 displayName: newUser.displayName,
                 role: newUser.signupFor,
+                email: newUser.email,
                 // photoURL: newUser.photoURL,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             })

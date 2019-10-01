@@ -51,7 +51,7 @@ class Cart extends Component {
         if(cart){
         return (
             <div key={key} >
-                <div align='center' onClick={() => this.openModal(cart)} 
+                <div align='center' 
                     style={{display:"flex", flexDirection:"row", justifyContent: "flex-start", paddingLeft:"40px", alignContent: "center", alignItems: "center"}}>
                     <p style={{paddingLeft:"20px"}}>{no++}.</p>
                     <img style={{paddingLeft:"20px"}} src={cart.url} height="100px" width="100px"/>

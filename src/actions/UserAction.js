@@ -64,7 +64,8 @@ export const checkout = (uid, cart, key, address) => {
         
         const firestore = getFirestore();
 
-        firestore.collection('deliveries').doc(uid).collection('delivery').doc(key).set({
+        firestore.collection('deliveries').doc(uid).update({
+        [key] : {
             itemName: cart.itemName,
             price: cart.price,
             description: cart.description,
@@ -72,6 +73,7 @@ export const checkout = (uid, cart, key, address) => {
             url: cart.url,
             address: address.address1+' '+address.address2+' '+address.poscode+' '+address.state+' '+address.country,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }
         }).then(() => {
             dispatch({ type: 'DELIVERY_SUCCESS' })
         }).catch((err) => {

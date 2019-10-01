@@ -11,6 +11,8 @@ import contact from '../components/Contact';
 import additem from '../components/Additem';
 import cart from '../components/Cart';
 import profile from '../components/Profile';
+import user from '../components/Users';
+import delivery from '../components/Delivery';
 import BgImg from '../assets/img/fypbg.jpeg';
 import { connect } from 'react-redux';
 
@@ -58,6 +60,16 @@ class App extends Component {
                 <div>
                     <p><Link to="/contact" style={{ textDecoration: 'none' }}>Contact</Link></p>
                 </div>
+                {this.props.role === 'admin'&&
+                <div>
+                    <p><Link to="/user" style={{ textDecoration: 'none' }}>User</Link></p>
+                </div>
+                }
+                {this.props.role === 'admin'&&
+                <div>
+                    <p><Link to="/delivery" style={{ textDecoration: 'none' }}>Delivery</Link></p>
+                </div>
+                }
             </div>
             <div className="setting">
                 <div>
@@ -101,6 +113,8 @@ class App extends Component {
             <Route path='/additem' component={additem} />
             <Route path='/cart' component={cart} />
             <Route path='/profile' component={profile} />
+            <Route path='/user' component={user} />
+            <Route path='/delivery' component={delivery} />
             <Route path='/' component={Home} exact/>
           </div>
         </BrowserRouter>

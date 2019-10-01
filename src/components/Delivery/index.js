@@ -42,7 +42,7 @@ class Delivery extends Component {
       <div className="Home">
         <div className="body">
             <div className="allProduct">
-                <h1 className="Zuka">- Users -</h1>
+                <h1 className="Zuka">- Delivery -</h1>
             </div>
             
             <div className="productContainer">
